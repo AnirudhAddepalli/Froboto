@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SprayingSystem", "VenkataIdsCamera\SprayingSystem.csproj", "{1210A514-B245-461E-AEE1-4DD938CE86D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9AE292B0-3679-4352-8CBC-7D390ACDB192}"
+	ProjectSection(SolutionItems) = preProject
+		iDS_Driver_Installed.png = iDS_Driver_Installed.png
+		PT0217-10 Camera iDS Driver Installation.md = PT0217-10 Camera iDS Driver Installation.md
+		PT0217-10 Configuration FIle.md = PT0217-10 Configuration FIle.md
+		PT0217-10 Raspberry Pi Python Server.md = PT0217-10 Raspberry Pi Python Server.md
+		PT0217-10 ReleaseNotes_v_0.1.md = PT0217-10 ReleaseNotes_v_0.1.md
+		PT0217-10 ReleaseNotes_v_0.2.md = PT0217-10 ReleaseNotes_v_0.2.md
+		PT0217-10 ReleaseNotes_v_0.3.md = PT0217-10 ReleaseNotes_v_0.3.md
+		PT0217-10 ReleaseNotes_v_1.0.md = PT0217-10 ReleaseNotes_v_1.0.md
+		PT0217-10 ReleaseNotes_v_1.1.md = PT0217-10 ReleaseNotes_v_1.1.md
+		PT0217-10 ReleaseNotes_v_1.2.md = PT0217-10 ReleaseNotes_v_1.2.md
+		PT0217-10 ReleaseNotes_v_1.3.md = PT0217-10 ReleaseNotes_v_1.3.md
+		PT0217-10 ReleaseNotes_v_1.4.md = PT0217-10 ReleaseNotes_v_1.4.md
+		PT0217-10 ReleaseNotes_v_1.5.md = PT0217-10 ReleaseNotes_v_1.5.md
+		PT0217-10 ReleaseNotes_v_1.6.md = PT0217-10 ReleaseNotes_v_1.6.md
+		PT0217-10 ReleaseNotes_v_1.7.md = PT0217-10 ReleaseNotes_v_1.7.md
+		PT0217-10 ReleaseNotes_v_1.8.md = PT0217-10 ReleaseNotes_v_1.8.md
+		PT0217-10 Robot Integration.md = PT0217-10 Robot Integration.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SprayingSystemTests", "SprayingSystemTests\SprayingSystemTests.csproj", "{393936AD-07DD-4013-9543-88B8ED1C0AAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1210A514-B245-461E-AEE1-4DD938CE86D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1210A514-B245-461E-AEE1-4DD938CE86D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1210A514-B245-461E-AEE1-4DD938CE86D4}.Debug|x64.ActiveCfg = Debug|x64
+		{1210A514-B245-461E-AEE1-4DD938CE86D4}.Debug|x64.Build.0 = Debug|x64
+		{1210A514-B245-461E-AEE1-4DD938CE86D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1210A514-B245-461E-AEE1-4DD938CE86D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1210A514-B245-461E-AEE1-4DD938CE86D4}.Release|x64.ActiveCfg = Release|x64
+		{1210A514-B245-461E-AEE1-4DD938CE86D4}.Release|x64.Build.0 = Release|x64
+		{393936AD-07DD-4013-9543-88B8ED1C0AAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{393936AD-07DD-4013-9543-88B8ED1C0AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{393936AD-07DD-4013-9543-88B8ED1C0AAA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{393936AD-07DD-4013-9543-88B8ED1C0AAA}.Debug|x64.Build.0 = Debug|Any CPU
+		{393936AD-07DD-4013-9543-88B8ED1C0AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{393936AD-07DD-4013-9543-88B8ED1C0AAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{393936AD-07DD-4013-9543-88B8ED1C0AAA}.Release|x64.ActiveCfg = Release|Any CPU
+		{393936AD-07DD-4013-9543-88B8ED1C0AAA}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CB0DE0B6-D6F0-46DA-BC31-43C841B3547D}
+	EndGlobalSection
+EndGlobal

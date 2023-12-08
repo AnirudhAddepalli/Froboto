@@ -1,0 +1,63 @@
+﻿{
+  "camera": {
+    "temp_folder": "c:/temp/spraying_system/"
+  },
+
+  "rpi": {
+    "ip_address_Luis": "192.168.1.24",
+    "ip_address_Wyatt": "169.254.2.148",
+    "ip_address": "169.254.2.148",
+    "port": 8081,
+    "message_timeout_sec": 10
+  },
+
+  "robot": {
+    "id": 9,
+    "project": "C:\\EpsonRC70\\projects\\API_Demos\\Demo1\\demo1.sprj",
+    "simulation": true,
+    "locations": [
+      {
+        "name": "Home",
+        "point": 1,
+        "speed": 50
+      },
+      {
+        "name": "Tweezers",
+        "point": 1,
+        "speed": 50
+      },
+      {
+        "name": "Spray",
+        "point": 3,
+        "speed": 50
+      },
+      {
+        "name": "Plunge",
+        "point": 4,
+        "speed": 50
+      },
+      {
+        "name": "GridStore1",
+        "point": 11
+      },
+      {
+        "name": "GridStore2",
+        "point": 12
+      },
+      {
+        "name": "GridStore3",
+        "point": 13
+      },
+      {
+        "name": "GridStore4",
+        "point": 14
+      }
+    ],
+
+    "gridStoreJumpParameters": {
+      "command": ":Z(-15)"
+
+    }
+
+  }
+}

@@ -1,0 +1,470 @@
+﻿<Window x:Class="SprayingSystem.MainWindow2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SprayingSystem"
+        xmlns:UiControls="clr-namespace:SprayingSystem.UiControls"
+        xmlns:utility="clr-namespace:SprayingSystem.Utility"
+        mc:Ignorable="d"
+        Title="NIEHS Spraying System by piTree Software - Version 1.8.0" 
+        Height="770" Width="1300"
+        Closing="Window_Closing">
+
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button" >
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="4"/>
+        </Style>
+        <Style x:Key="CheckBoxStyle" TargetType="CheckBox" >
+            <Setter Property="Width" Value="175"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="4"/>
+        </Style>
+        <Style x:Key="LogTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Camera Image -->
+        <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="1"
+                BorderThickness="2"
+                BorderBrush="DarkCyan">
+            <Grid >
+                <Image Source ="{Binding CameraViewModel.CameraImage}" />
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="1"
+                BorderThickness="2"
+                BorderBrush="DarkCyan">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="34"/>
+                </Grid.ColumnDefinitions>
+                <MediaElement 
+                    Name="rpiVideoPlayer"
+                    Stretch="Uniform" 
+                    LoadedBehavior="Manual"
+                    UnloadedBehavior="Stop"
+                    />
+                <Button
+                    Grid.Column="1"
+                    VerticalAlignment="Bottom"
+                    Content="Play"
+                    Command="{Binding RpiViewModel.PlayVideoCmd}"
+                    Width="30" Height="20"/>
+            </Grid>
+        </Border>
+
+        <!-- Log -->
+        <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="2"
+                BorderThickness="2"
+                BorderBrush="DarkCyan">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                    Style="{StaticResource LogTitleStyle}"
+                    Text="Log"/>
+                <RichTextBox Grid.Row="1"
+                    Name="richTextBoxLog"
+                    Margin="4"
+                    VerticalContentAlignment="Stretch">
+                    <RichTextBox.Resources>
+                        <Style TargetType="{x:Type Paragraph}">
+                            <Setter Property="Margin" Value="0"/>
+                        </Style>
+                    </RichTextBox.Resources>
+                </RichTextBox>
+                <Button Grid.Row="2"
+                        Name="LogSaveCmd"
+                    Content="Save"
+                    Style="{StaticResource ButtonStyle}" 
+                    Click="LogSaveCmd_Click"
+                    />
+            </Grid>
+        </Border>
+
+        <!-- Read/Write global preserve variables, ... spray plunge -->
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
+            <Border Height="180"
+                    BorderThickness="2"
+                    BorderBrush="DarkCyan">
+                <UiControls:RobotVariablesUserControl 
+                    DataContext="{Binding RobotViewModel.RobotVariablesViewModel}"/>
+            </Border>
+
+            <Border Height="20"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Grid.Column="0"
+                    Orientation="Vertical"
+                    HorizontalAlignment="Left">
+                    <Button 
+                        Content="Load Tweezers" 
+                        Style="{StaticResource ButtonStyle}"
+                        Command ="{Binding RobotViewModel.MoveToLoadTweezersCmd}"/>
+                    <Button
+                        Content="Spray Position" 
+                        Style="{StaticResource ButtonStyle}"
+                        Command ="{Binding RobotViewModel.MoveToSprayPositionCmd}"/>
+                </StackPanel>
+                <StackPanel
+                    Grid.Column="1"
+                    Orientation="Vertical"
+                    HorizontalAlignment="Left">
+                    <Button
+                        Content="Edit Config Settings"
+                        Style="{StaticResource ButtonStyle}"
+                        Command="{Binding EditConfigSettingsCmd}" />
+                    <Button
+                        Content="Clean Process"
+                        Style="{StaticResource ButtonStyle}"
+                        Command="{Binding RpiViewModel.CleanSprayerCmd}" />
+                </StackPanel>
+
+            </Grid>
+
+            <Border Height="10" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <CheckBox
+                        Content="Record Spray"
+                        Style="{StaticResource CheckBoxStyle}"
+                        IsChecked="{Binding ProcessOptionsViewModel.RecordSpray}"
+                    />
+                    <CheckBox
+                        Content="RPI Record Spray"
+                        Style="{StaticResource CheckBoxStyle}"
+                        IsChecked="{Binding ProcessOptionsViewModel.RpiRecordSpray}"
+                    />
+                    <CheckBox
+                        Content="Spray" 
+                        Style="{StaticResource CheckBoxStyle}"
+                        IsChecked="{Binding ProcessOptionsViewModel.Spray}"
+                    />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    <CheckBox 
+                        Content="Sonicate Tweezers"
+                        Style="{StaticResource CheckBoxStyle}"
+                        IsChecked="{Binding ProcessOptionsViewModel.SonicateTweezers}"
+                    />
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <CheckBox Grid.Row="0"
+                                  Content="Blot"
+                                  Style="{StaticResource CheckBoxStyle}"
+                                  IsChecked="{Binding ProcessOptionsViewModel.Blot}"
+                        />
+
+                        <RadioButton Grid.Row=" 1"
+                                     GroupName="BlotGroup"
+                                     IsChecked="{Binding ProcessOptionsViewModel.Blot_BackBlot}"
+                                     IsEnabled="{Binding ProcessOptionsViewModel.Blot}"
+                                     VerticalContentAlignment="Center"
+                                     Content="Back Blot"
+                                     Margin="40,-8,0,8"
+                        />
+                        <RadioButton Grid.Row=" 2"
+                                     GroupName="BlotGroup"
+                                     IsChecked="{Binding ProcessOptionsViewModel.Blot_FrontBlot}"
+                                     IsEnabled="{Binding ProcessOptionsViewModel.Blot}"
+                                     VerticalContentAlignment="Center"
+                                     Content="Front Blot"
+                                     Margin="40,0,0,0"
+                        />
+                    </Grid>
+                </StackPanel>
+
+            </Grid>
+
+            <Border Height="0" />
+
+            <!-- Spray and Plunge, Camera LIVE -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Grid.Row="0"
+                        Content="Blot Solenoid Forward"
+                        Style="{StaticResource ButtonStyle}"
+                        Command ="{Binding RpiViewModel.BlotSolenoidForwardCmd}"/>
+
+                <Button Grid.Column="1" Grid.Row="0"
+                        Content="Blot Solenoid Reverse"
+                        Style="{StaticResource ButtonStyle}"
+                        HorizontalAlignment="Left"
+                        Command ="{Binding RpiViewModel.BlotSolenoidReverseCmd}"/>
+
+                <Button Grid.Column="0" Grid.Row="1"
+                    Content="Spray and Plunge"
+                    Style="{StaticResource ButtonStyle}"
+                    Command ="{Binding SprayAndPlungeCmd}"
+                    />
+
+                <StackPanel 
+                    Grid.Column="1" Grid.Row="1"
+                    Orientation="Horizontal">
+
+                    <Button 
+                        Content="Live"
+                        Style="{StaticResource ButtonStyle}"
+                        Command="{Binding CameraViewModel.LiveCmd}"/>
+
+                    <RadioButton
+                        IsChecked="{Binding CameraViewModel.IsLiveMode}"
+                        GroupName="CameraIsLive"
+                        IsEnabled="False"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <!-- Camera, Robot controls -->
+        <Grid Row="2" Column="0" ColumnSpan="3">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Grid, Connections -->
+                <Grid Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- GridInfo -->
+                    <Grid Grid.Column="0"
+                          Margin="40">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock
+                            Grid.Row="0" Grid.Column="0"
+                            Text="Grid Box Name:"
+                            VerticalAlignment="Center"/>
+                        <TextBox
+                            Grid.Row="0" Grid.Column="1"
+                            Text="{Binding GridViewModel.GridBoxName, UpdateSourceTrigger=PropertyChanged}"
+                            VerticalAlignment="Center"
+                            Height="30"/>
+
+                        <TextBlock
+                            Grid.Row="1" Grid.Column="0"
+                            Text="Sample Name:"
+                            VerticalAlignment="Center"/>
+                        <TextBox
+                            Grid.Row="1" Grid.Column="1"
+                            Text="{Binding GridViewModel.SampleName, UpdateSourceTrigger=PropertyChanged}"
+                            VerticalAlignment="Center"
+                            Height="30"/>
+
+                        <TextBlock
+                            Grid.Row="2" Grid.Column="0"
+                            Text="Grid Position:"
+                            VerticalAlignment="Center"/>
+                        <!--
+                        [] The counter needs to have the text vertically centered, otherwise it looks fine.
+                        [] I should resize the other text boxes around, to make them the same height (30).
+                        -->
+                        <utility:IntUpDownCounter
+                            Grid.Row="2" Grid.Column="1"
+                            MinValue="1" 
+                            MaxValue="8" 
+                            StartValue="1"
+                            NUDTextBox="{Binding GridViewModel.GridPosition,
+                                UpdateSourceTrigger=PropertyChanged,  Mode=TwoWay}"
+                            VerticalAlignment="Center"
+                            />
+
+                        <Button
+                            Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                            Content="Store Grid"
+                            Style="{StaticResource ButtonStyle}"
+                            Command="{Binding GridViewModel.StoreGridCmd}" />
+                    </Grid>
+
+                    <!-- Connections -->
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Button 
+                            Grid.Row="0" Grid.Column="0"
+                            Content="Connect To RPI" 
+                            Style="{StaticResource ButtonStyle}"
+                            Command="{Binding RpiViewModel.ConnectCmd}"
+                            />
+
+                        <RadioButton
+                            Grid.Row="0" Grid.Column="1"
+                            GroupName="RpiConnect"
+                            IsChecked="{Binding RpiViewModel.IsConnected}"
+                            IsEnabled="False"
+                            VerticalContentAlignment="Center"
+                            />
+
+                        <Button 
+                            Grid.Row="1" Grid.Column="0"
+                            Content="Connect To Camera" 
+                            Style="{StaticResource ButtonStyle}"
+                            Command="{Binding CameraViewModel.ConnectCmd}"
+                            />
+
+                        <RadioButton
+                            Grid.Row="1" Grid.Column="1"
+                            GroupName="CameraConnect"
+                            IsChecked="{Binding CameraViewModel.IsConnected}"
+                            IsEnabled="False"
+                            VerticalContentAlignment="Center"
+                            />
+
+                        <Button 
+                            Grid.Row="2" Grid.Column="0"
+                            Content="Connect To Robot" 
+                            Style="{StaticResource ButtonStyle}"
+                            Command="{Binding RobotViewModel.ConnectCmd}"
+                            />
+
+                        <RadioButton
+                            Grid.Row="2" Grid.Column="1"
+                            GroupName="RobotConnect"
+                            IsChecked="{Binding RobotViewModel.IsConnected}"
+                            IsEnabled="False"
+                            VerticalContentAlignment="Center"
+                            />
+
+                        <Button
+                            Grid.Row="2" Grid.Column="2"
+                            Style="{StaticResource ButtonStyle}"
+                            Command="{Binding RobotViewModel.HighPowerOnCmd}"
+                            Content="High Power On"/>
+                    </Grid>
+                </Grid>
+
+                <!-- Take picture ... Power Down button commands -->
+                <Grid Column="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Button Grid.Row="0" Grid.Column="0"
+                            Content="Take Picture"
+                            Style="{StaticResource ButtonStyle}"
+                            Command="{Binding CameraViewModel.TakePictureCmd}"/>
+
+                        <Button Grid.Row="1" Grid.Column="0"
+                            Content="Save Image" 
+                            Style="{StaticResource ButtonStyle}"
+                            Command="{Binding CameraViewModel.SavePictureCmd}"/>
+
+                        <Button Grid.Row="2" Grid.Column="0"
+                                Content="Task Manager" 
+                                Style="{StaticResource ButtonStyle}"
+                                Command="{Binding RobotViewModel.TaskManagerPresenterCmd}"/>
+
+                        <Button Grid.Row="0" Grid.Column="1"
+                                Content="Robot Manager"
+                                Style="{StaticResource ButtonStyle}" 
+                                Command="{Binding RobotViewModel.RobotManagerPresenterCmd}"/>
+
+                        <Button Grid.Row="1" Grid.Column="1"
+                                Content="I/O Manager" 
+                                Style="{StaticResource ButtonStyle}"
+                                Command="{Binding RobotViewModel.IoMonitorPresenterCmd}"/>
+
+                        <Button Grid.Row="2" Grid.Column="1"
+                                Content="Reset" 
+                                Style="{StaticResource ButtonStyle}"
+                                Command="{Binding RobotViewModel.ResetCmd}"/>
+
+                        <Button Grid.Row="0" Grid.Column="2"
+                                Content="Teach Point"
+                                Style="{StaticResource ButtonStyle}" 
+                                Command="{Binding RobotViewModel.PointTeachingPresenterCmd}"/>
+
+                        <Button Grid.Row="1" Grid.Column="2"
+                                Content="Controller Tools" 
+                                Style="{StaticResource ButtonStyle}"
+                                Command="{Binding RobotViewModel.ControllerToolsPresenterCmd}"/>
+
+                        <Button Grid.Row="2" Grid.Column="2"
+                                Content="Power down" 
+                                Style="{StaticResource ButtonStyle}"
+                                Command="{Binding PowerDownCmd}"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

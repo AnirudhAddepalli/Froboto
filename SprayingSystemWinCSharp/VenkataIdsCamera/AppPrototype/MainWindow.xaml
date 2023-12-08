@@ -1,0 +1,250 @@
+﻿<Window x:Class="SprayingSystem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="NIEHS Spraying System by piTree Software - Version 0.2" 
+        Height="1000" Width="1200">
+
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button" >
+            <Setter Property="Width" Value="175"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="4"/>
+        </Style>
+
+        <Style x:Key="CommandHeadingStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="DarkSlateGray" />
+            <Setter Property="Background" Value="LightGray" />
+            <Setter Property="Margin" Value="6,12,6,6"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+
+        <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="150"/>
+            </Grid.RowDefinitions>
+
+            <Image 
+                x:Name="image" 
+                Grid.Row="0"/>
+
+            <RichTextBox 
+                Name="richTextBoxLog"
+                Grid.Row="1"
+                Margin="4">
+                <RichTextBox.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                </RichTextBox.Resources>
+            </RichTextBox>
+            
+        </Grid>
+
+        <TextBlock 
+            x:Name="counterTextBlock" 
+            Grid.Row="1" Grid.Column="0" 
+            TextAlignment="Left"
+            Text="Errors: 0"/>
+
+        <StatusBar 
+            Name="sbar" 
+            VerticalAlignment="Bottom" 
+            Background="Beige" 
+            Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal"
+                            Width="160">
+                    <TextBlock Text="Camera : " />
+                    <TextBlock x:Name="CameraStatus" />
+                </StackPanel>
+            </StatusBarItem>
+            <Separator/>
+
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal"
+                            Width="160">
+                    <TextBlock Text="Display : " />
+                    <TextBlock x:Name="DisplayStatus" />
+                </StackPanel>
+            </StatusBarItem>
+            <Separator/>
+
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal"
+                            Width="160">
+                    <TextBlock Text="Raspberry Pi : " />
+                    <TextBlock x:Name="RpiStatus" />
+                </StackPanel>
+            </StatusBarItem>
+            <Separator/>
+
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal"
+                            Width="160">
+                    <TextBlock Text="Robot : " />
+                    <TextBlock x:Name="RobotStatus" />
+                </StackPanel>
+            </StatusBarItem>
+            <Separator/>
+
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal"
+                            Width="250">
+                    <TextBlock Text="Robot Last Cmd : " />
+                    <TextBlock x:Name="RobotLastCmd" />
+                </StackPanel>
+            </StatusBarItem>
+            <Separator/>
+
+        </StatusBar>
+
+        <StackPanel
+            Grid.Column="0" Grid.Row="0"
+            Orientation="Vertical"
+            Background="LightSlateGray">
+
+            <!-- 
+            Spraying Process
+            -->
+
+            <TextBlock
+                Text ="Spraying Commands"
+                Style="{StaticResource CommandHeadingStyle}" />
+            <Button
+                Content="Idle"
+                Style="{StaticResource ButtonStyle}" />
+            <Button
+                Content="Get Ready to Load Grid"
+                Style="{StaticResource ButtonStyle}" />
+            <Button
+                Content="Spray and Vitrify"
+                Style="{StaticResource ButtonStyle}" />
+            <Button
+                Content="Get Ready to Unload Grid"
+                Style="{StaticResource ButtonStyle}" />
+
+
+            <!-- 
+            Camera Controller
+            -->
+
+            <TextBlock
+                Text ="Camera Commands"
+                Style="{StaticResource CommandHeadingStyle}" />
+            <Button
+                Content="Connect"
+                Style="{StaticResource ButtonStyle}"
+                Click="CameraConnectCommand_OnClick" />
+            <Button
+                Content="Live"
+                Style="{StaticResource ButtonStyle}"
+                Click="CameraLiveCommand_OnClick"/>
+            <Button
+                Content="Take Picture"
+                Style="{StaticResource ButtonStyle}" 
+                Click="CameraTakePictureCommand_OnClick"/>
+            <Button
+                Content="Save Image" 
+                Style="{StaticResource ButtonStyle}"
+                Click="CameraSaveImageCommand_OnClick"/>
+
+            <!-- 
+            RPi Controller
+            -->
+
+            <TextBlock
+                Text ="Raspberry-Pi Commands"
+                Style="{StaticResource CommandHeadingStyle}" />
+            <Button
+                Content="Connect"
+                Style="{StaticResource ButtonStyle}" 
+                Click="RpiConnectCommand_OnClick" />
+            <Button
+                Content="Spray"
+                Style="{StaticResource ButtonStyle}"
+                Click="RpiSprayCommand_OnClick"/>
+            <Button
+                Content="LED On"
+                Style="{StaticResource ButtonStyle}"
+                Click="RpiLedOnCommand_OnClick"/>
+            <Button
+                Content="LED Off"
+                Style="{StaticResource ButtonStyle}"
+                Click="RpiLedOffCommand_OnClick"/>
+
+            <!--
+            Robot Controller
+            -->
+            <TextBlock
+                Text="Robot Commands"
+                Style="{StaticResource CommandHeadingStyle}" />
+            <Button
+                Content="Connect"
+                Style="{StaticResource ButtonStyle}"
+                Click="RobotConnectCommand_OnClick" Width="175" />
+            <Button
+                Content="Go Home"
+                Style="{StaticResource ButtonStyle}"
+                Click="RobotGoHomeCommand_OnClick" />
+            <Button
+                Content="Go Standby"
+                Style="{StaticResource ButtonStyle}"
+                Click="RobotGoStandbyCommand_OnClick" />
+            <Button
+                Content="Go Before Spray"
+                Style="{StaticResource ButtonStyle}"
+                Click="RobotGoBeforeSprayCommand_OnClick" />
+            <Button
+                Content="Go After Spray"
+                Style="{StaticResource ButtonStyle}"
+                Click="RobotGoAfterSprayCommand_OnClick" />
+            <Grid
+                Height="30"
+                Margin="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <CheckBox IsChecked="True"
+                          Checked="RobotMotorsOnOffHandler">Power On</CheckBox>
+                <RadioButton Grid.Column="1" 
+                             Name="JumpMotionButton"
+                             GroupName="MotionType"
+                             IsChecked="True"
+                             Checked="MotionTypeCheckedHandler">Jump motion</RadioButton>
+                <RadioButton Grid.Column="2" 
+                             Name="MoveTypeButton"
+                             GroupName="MotionType"
+                             Checked="MotionTypeCheckedHandler">Move motion</RadioButton>
+            </Grid>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Speed"
+                           Padding="4,0,8,0"/>
+                <TextBox Name="Speed"
+                         PreviewTextInput="NumberValidationTextBox"
+                         TextChanged="SpeedChangedHandler"
+                    Width="40" Text="50"></TextBox>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
